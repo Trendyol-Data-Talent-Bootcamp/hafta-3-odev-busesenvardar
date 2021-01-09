@@ -12,8 +12,10 @@ name kolonunu seçmek
 car ve manufacture arraylerini unnest ederek her iki array içindeki id kolonları üzerinden joinlemek
 Unnest ettiğimiz bu 2 array içinden car.id, car.model ve manufacture.year alanlarını uygun aliaslar ile seçmek
 purchase array'i içindeki date kolonundaki her değere 3 saat eklemek ve purchase kolonunu tekrar array olarak tutmak.
+
 ```SQL
-select name,car,manufacture,array (select as struct id, TIMESTAMP_ADD(date, interval 3 hour) from unnest(purchase)) as purchase
+select name,car.id as car_id, car.model as car_model, manufacture.year as manufacture_year
+  ,array (select as struct id, TIMESTAMP_ADD(date, interval 3 hour) from unnest(purchase)) as purchase
 from `dsmbootcamp.buse_senvardar.semi_structured_hw`
 cross join unnest(car) car
 cross join unnest(manufacture) manufacture
